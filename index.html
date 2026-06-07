@@ -173,7 +173,10 @@
         }
 
         .btn {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
             padding: 12px 28px;
             background: #667eea;
             color: white;
@@ -183,6 +186,13 @@
             transition: all 0.3s ease;
             box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
             font-size: 0.95em;
+        }
+
+        .btn-icon {
+            width: 1.2em;
+            height: 1.2em;
+            object-fit: contain;
+            display: block;
         }
 
         .btn:hover {
@@ -275,15 +285,14 @@
         }
 
         .example-thumbs {
-            display: flex;
-            justify-content: center;
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
             gap: 16px;
             margin: 0 0 28px;
-            flex-wrap: wrap;
         }
 
         .example-thumb {
-            width: 180px;
+            width: 100%;
             padding: 8px;
             background: #ffffff;
             border: 1px solid #e2e8f0;
@@ -306,7 +315,7 @@
             border-radius: 6px;
             background: #f7fafc;
             border: 1px solid #e2e8f0;
-            margin-bottom: 8px;
+            margin-bottom: 0;
             overflow: hidden;
         }
 
@@ -338,12 +347,6 @@
             grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: 18px;
             align-items: center;
-        }
-
-        .example-stack {
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
         }
 
         .example-media {
@@ -451,16 +454,17 @@
             }
 
             .example-thumb {
-                width: 148px;
+                width: 100%;
+            }
+
+            .example-thumbs {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
             }
 
             .example-layout {
                 grid-template-columns: 1fr;
             }
 
-            .example-stack {
-                display: flex;
-            }
         }
     </style>
 </head>
@@ -494,7 +498,7 @@
                 <sup>1</sup>VCIP, NKU &nbsp;&nbsp;
                 <sup>2</sup>S-Lab, NTU &nbsp;&nbsp;
                 <sup>3</sup>ZGCA &nbsp;&nbsp;
-                <sup>4</sup>Sensetime Research &nbsp;&nbsp;
+                <sup>4</sup>SenseTime Research &nbsp;&nbsp;
                 <sup>5</sup>NKIARI, Shenzhen Futian
             </div>
 
@@ -511,10 +515,17 @@
             </div>
             
             <div class="buttons">
-                <a class="btn">📄 Paper</a>
-                <a class="btn">📑 arXiv</a>
-                <a class="btn">💻 Code</a>
-                <a class="btn">🗂️ Dataset</a>
+                <!-- <a class="btn">📄 Paper</a> -->
+                <!-- <a class="btn">📑 arXiv</a> -->
+                <a href="https://github.com/Gong1130/DIRECT" class="btn" target="_blank">
+                    <img src="images/github_logo.png" alt="" class="btn-icon"> Code
+                </a>
+                <a href="https://huggingface.co/superGong/DIRECT" class="btn" target="_blank">
+                    <img src="images/hf.png" alt="" class="btn-icon"> Model
+                </a>
+                <a class="btn">
+                    <img src="images/hf.png" alt="" class="btn-icon"> Dataset (soon)
+                </a>
             </div>
         </header>
 
@@ -542,34 +553,60 @@
                         <div class="thumb-preview">
                             <img src="images/case1/output.png" alt="Case 1 preview">
                         </div>
-                        <span>Case 1</span>
                     </button>
                     <button class="example-thumb" type="button" data-case="case-2" aria-pressed="false">
                         <div class="thumb-preview">
                             <img src="images/case2/output.png" alt="Case 2 preview">
                         </div>
-                        <span>Case 2</span>
                     </button>
                     <button class="example-thumb" type="button" data-case="case-3" aria-pressed="false">
                         <div class="thumb-preview">
                             <img src="images/case3/output.webp" alt="Case 3 preview">
                         </div>
-                        <span>Case 3</span>
+                    </button>
+                    <button class="example-thumb" type="button" data-case="case-4" aria-pressed="false">
+                        <div class="thumb-preview">
+                            <img src="images/case4/output.png" alt="Case 4 preview">
+                        </div>
+                    </button>
+                    <button class="example-thumb" type="button" data-case="case-5" aria-pressed="false">
+                        <div class="thumb-preview">
+                            <img src="images/case5/output.png" alt="Case 5 preview">
+                        </div>
+                    </button>
+                    <button class="example-thumb" type="button" data-case="case-6" aria-pressed="false">
+                        <div class="thumb-preview">
+                            <img src="images/case6/output.png" alt="Case 6 preview">
+                        </div>
+                    </button>
+                    <button class="example-thumb" type="button" data-case="case-7" aria-pressed="false">
+                        <div class="thumb-preview">
+                            <img src="images/case7/output.png" alt="Case 7 preview">
+                        </div>
+                    </button>
+                    <button class="example-thumb" type="button" data-case="case-8" aria-pressed="false">
+                        <div class="thumb-preview">
+                            <img src="images/case8/output.png" alt="Case 8 preview">
+                        </div>
+                    </button>
+                    <button class="example-thumb" type="button" data-case="case-9" aria-pressed="false">
+                        <div class="thumb-preview">
+                            <img src="images/case9/output.png" alt="Case 9 preview">
+                        </div>
+                    </button>
+                    <button class="example-thumb" type="button" data-case="case-10" aria-pressed="false">
+                        <div class="thumb-preview">
+                            <img src="images/case10/output.png" alt="Case 10 preview">
+                        </div>
                     </button>
                 </div>
 
                 <div class="example-frame">
                     <div class="example-panel is-active" data-case="case-1">
                         <div class="example-layout">
-                            <div class="example-stack">
-                                <div class="example-media">
-                                    <img src="images/case1/reference.png" alt="Case 1 reference object">
-                                    <span class="example-label">object</span>
-                                </div>
-                                <div class="example-media">
-                                    <img src="images/case1/background.png" alt="Case 1 background">
-                                    <span class="example-label">background</span>
-                                </div>
+                            <div class="example-media">
+                                <img src="images/case1/reference.png" alt="Case 1 object">
+                                <span class="example-label">object</span>
                             </div>
                             <div class="example-media">
                                 <img src="images/case1/proxy.png" alt="Case 1 geometry guidance">
@@ -584,15 +621,9 @@
 
                     <div class="example-panel" data-case="case-2">
                         <div class="example-layout">
-                            <div class="example-stack">
-                                <div class="example-media">
-                                    <img src="images/case2/reference.png" alt="Case 2 reference object">
-                                    <span class="example-label">object</span>
-                                </div>
-                                <div class="example-media">
-                                    <img src="images/case2/background.jpg" alt="Case 2 background">
-                                    <span class="example-label">background</span>
-                                </div>
+                            <div class="example-media">
+                                <img src="images/case2/reference.png" alt="Case 2 object">
+                                <span class="example-label">object</span>
                             </div>
                             <div class="example-media">
                                 <img src="images/case2/proxy.png" alt="Case 2 geometry guidance">
@@ -607,15 +638,9 @@
 
                     <div class="example-panel" data-case="case-3">
                         <div class="example-layout">
-                            <div class="example-stack">
-                                <div class="example-media">
-                                    <img src="images/case3/reference.png" alt="Case 3 reference object">
-                                    <span class="example-label">object</span>
-                                </div>
-                                <div class="example-media">
-                                    <img src="images/case3/background.jpg" alt="Case 3 background">
-                                    <span class="example-label">background</span>
-                                </div>
+                            <div class="example-media">
+                                <img src="images/case3/reference.png" alt="Case 3 object">
+                                <span class="example-label">object</span>
                             </div>
                             <div class="example-media">
                                 <img src="images/case3/proxy.webp" alt="Case 3 geometry guidance">
@@ -623,6 +648,125 @@
                             </div>
                             <div class="example-media">
                                 <img src="images/case3/output.webp" alt="Case 3 insertion result">
+                                <span class="example-label">result</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="example-panel" data-case="case-4">
+                        <div class="example-layout">
+                            <div class="example-media">
+                                <img src="images/case4/reference.png" alt="Case 4 object">
+                                <span class="example-label">object</span>
+                            </div>
+                            <div class="example-media">
+                                <img src="images/case4/proxy.png" alt="Case 4 geometry guidance">
+                                <span class="example-label">3D proxy with background</span>
+                            </div>
+                            <div class="example-media">
+                                <img src="images/case4/output.png" alt="Case 4 insertion result">
+                                <span class="example-label">result</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="example-panel" data-case="case-5">
+                        <div class="example-layout">
+                            <div class="example-media">
+                                <img src="images/case5/reference.png" alt="Case 5 object">
+                                <span class="example-label">object</span>
+                            </div>
+                            <div class="example-media">
+                                <img src="images/case5/proxy.png" alt="Case 5 geometry guidance">
+                                <span class="example-label">3D proxy with background</span>
+                            </div>
+                            <div class="example-media">
+                                <img src="images/case5/output.png" alt="Case 5 insertion result">
+                                <span class="example-label">result</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="example-panel" data-case="case-6">
+                        <div class="example-layout">
+                            <div class="example-media">
+                                <img src="images/case6/reference.png" alt="Case 6 object">
+                                <span class="example-label">object</span>
+                            </div>
+                            <div class="example-media">
+                                <img src="images/case6/proxy.png" alt="Case 6 geometry guidance">
+                                <span class="example-label">3D proxy with background</span>
+                            </div>
+                            <div class="example-media">
+                                <img src="images/case6/output.png" alt="Case 6 insertion result">
+                                <span class="example-label">result</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="example-panel" data-case="case-7">
+                        <div class="example-layout">
+                            <div class="example-media">
+                                <img src="images/case7/reference.png" alt="Case 7 object">
+                                <span class="example-label">object</span>
+                            </div>
+                            <div class="example-media">
+                                <img src="images/case7/proxy.png" alt="Case 7 geometry guidance">
+                                <span class="example-label">3D proxy with background</span>
+                            </div>
+                            <div class="example-media">
+                                <img src="images/case7/output.png" alt="Case 7 insertion result">
+                                <span class="example-label">result</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="example-panel" data-case="case-8">
+                        <div class="example-layout">
+                            <div class="example-media">
+                                <img src="images/case8/reference.png" alt="Case 8 object">
+                                <span class="example-label">object</span>
+                            </div>
+                            <div class="example-media">
+                                <img src="images/case8/proxy.png" alt="Case 8 geometry guidance">
+                                <span class="example-label">3D proxy with background</span>
+                            </div>
+                            <div class="example-media">
+                                <img src="images/case8/output.png" alt="Case 8 insertion result">
+                                <span class="example-label">result</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="example-panel" data-case="case-9">
+                        <div class="example-layout">
+                            <div class="example-media">
+                                <img src="images/case9/reference.png" alt="Case 9 object">
+                                <span class="example-label">object</span>
+                            </div>
+                            <div class="example-media">
+                                <img src="images/case9/proxy.png" alt="Case 9 geometry guidance">
+                                <span class="example-label">3D proxy with background</span>
+                            </div>
+                            <div class="example-media">
+                                <img src="images/case9/output.png" alt="Case 9 insertion result">
+                                <span class="example-label">result</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="example-panel" data-case="case-10">
+                        <div class="example-layout">
+                            <div class="example-media">
+                                <img src="images/case10/reference.png" alt="Case 10 object">
+                                <span class="example-label">object</span>
+                            </div>
+                            <div class="example-media">
+                                <img src="images/case10/proxy.png" alt="Case 10 geometry guidance">
+                                <span class="example-label">3D proxy with background</span>
+                            </div>
+                            <div class="example-media">
+                                <img src="images/case10/output.png" alt="Case 10 insertion result">
                                 <span class="example-label">result</span>
                             </div>
                         </div>
@@ -672,7 +816,7 @@
         </div>
 
         <footer>
-            <p>© 2026 DIRECT Project | VCIP, NKU • S-Lab, NTU • ZGCA • SenseTime Research</p>
+            <p>© 2026 DIRECT Project | VCIP, NKU • S-Lab, NTU • ZGCA • SenseTime Research • NKIARI</p>
             <p style="margin-top: 10px; opacity: 0.8;">A Direct Pose-Controllable Object Insertion Framework</p>
         </footer>
     </div>
