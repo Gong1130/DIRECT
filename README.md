@@ -31,6 +31,12 @@
         <a href="https://gong1130.github.io/DIRECT/" target="_blank">
             <img src="https://img.shields.io/badge/🌐-Project%20Page-blue">
         </a>
+        <a href="https://arxiv.org/pdf/2606.06601" target="_blank">
+            <img src="https://img.shields.io/badge/📄-Paper-red">
+        </a>
+        <a href="https://arxiv.org/abs/2606.06601" target="_blank">
+            <img src="https://img.shields.io/badge/arXiv-2606.06601-b31b1b.svg">
+        </a>
         <a href="https://huggingface.co/superGong/DIRECT" target="_blank">
             <img src="https://img.shields.io/badge/🤗-Model%20Weights-yellow">
         </a>
@@ -40,7 +46,7 @@
 <strong>DIRECT enables pose-controllable object insertion with explicit geometric guidance from a reconstructed 3D proxy.</strong>
 
 <p align="center">
-  <img src="./assets/teaser.png" alt="DIRECT teaser" width="900">
+  <img src="./assets/teaser.png" alt="DIRECT teaser" width="720">
 </p>
 
 For more visual results, please check out our <a href="https://gong1130.github.io/DIRECT/" target="_blank">project page</a>.
@@ -116,6 +122,19 @@ ssh -L 7860:localhost:7860 -L 8081:localhost:8081 <user>@<server>
 ```
 
 After port forwarding, open `http://localhost:7860` in your local browser to use the full demo.
+
+## 📝 BibTeX
+
+If you find DIRECT useful for your research, please consider citing our paper:
+
+```bibtex
+@inproceedings{gong2026direct,
+  title     = {Direct 3D-Aware Object Insertion via Decomposed Visual Proxies},
+  author    = {Jingbo Gong and Yikai Wang and Yushi Lan and Yuhao Wan and Ziheng Ouyang and Rui Zhao and Ming-Ming Cheng and Qibin Hou and Chen Change Loy},
+  booktitle = {ICML},
+  year      = {2026}
+}
+```
 
 ## 👏 Acknowledgements
 
