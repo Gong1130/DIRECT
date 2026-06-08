@@ -195,6 +195,13 @@
             display: block;
         }
 
+        .arxiv-logo {
+            width: 0.9em;
+            height: 1.25em;
+            object-fit: contain;
+            display: block;
+        }
+
         .btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
@@ -367,6 +374,12 @@
             display: block;
         }
 
+        .example-layout > .example-media:first-child img {
+            margin: 0 auto;
+            width: auto;
+            max-width: 100%;
+        }
+
         .example-label {
             position: absolute;
             left: 10px;
@@ -410,6 +423,21 @@
             border-radius: 8px;
             border: 1px solid #e2e8f0;
             border-left: 4px solid #667eea;
+        }
+
+        .bibtex-block {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            color: #2d3748;
+            font-family: "Courier New", monospace;
+            font-size: 0.95em;
+            line-height: 1.6;
+            margin: 20px 0;
+            overflow-x: auto;
+            padding: 22px;
+            text-align: left;
+            white-space: pre;
         }
 
         footer {
@@ -515,8 +543,10 @@
             </div>
             
             <div class="buttons">
-                <!-- <a class="btn">📄 Paper</a> -->
-                <!-- <a class="btn">📑 arXiv</a> -->
+                <a href="https://arxiv.org/pdf/2606.06601" class="btn" target="_blank">📄 Paper</a>
+                <a href="https://arxiv.org/abs/2606.06601" class="btn" target="_blank">
+                    <img src="images/arxiv_logo.png" alt="" class="arxiv-logo"> arXiv
+                </a>
                 <a href="https://github.com/Gong1130/DIRECT" class="btn" target="_blank">
                     <img src="images/github_logo.png" alt="" class="btn-icon"> Code
                 </a>
@@ -813,6 +843,17 @@
                 </div>
             </div>
 
+            <!-- Citation Section -->
+            <div class="section">
+                <h2 class="section-title">Citation</h2>
+                <pre class="bibtex-block">@inproceedings{gong2026direct,
+  title     = {Direct 3D-Aware Object Insertion via Decomposed Visual Proxies},
+  author    = {Jingbo Gong and Yikai Wang and Yushi Lan and Yuhao Wan and Ziheng Ouyang and Rui Zhao and Ming-Ming Cheng and Qibin Hou and Chen Change Loy},
+  booktitle = {ICML},
+  year      = {2026}
+}</pre>
+            </div>
+
         </div>
 
         <footer>
@@ -834,7 +875,43 @@
                 document.querySelectorAll('.example-panel').forEach((panel) => {
                     panel.classList.toggle('is-active', panel.dataset.case === caseId);
                 });
+
+                syncExampleObjectHeight();
             });
+        });
+
+        function syncExampleObjectHeight() {
+            document.querySelectorAll('.example-panel').forEach((panel) => {
+                const media = panel.querySelectorAll('.example-media');
+                const objectImage = media[0]?.querySelector('img');
+                const proxyImage = media[1]?.querySelector('img');
+                const resultImage = media[2]?.querySelector('img');
+
+                if (!objectImage || !proxyImage || !resultImage) {
+                    return;
+                }
+
+                objectImage.style.maxHeight = '';
+
+                if (!panel.classList.contains('is-active')) {
+                    return;
+                }
+
+                const referenceHeight = Math.min(
+                    proxyImage.getBoundingClientRect().height,
+                    resultImage.getBoundingClientRect().height
+                );
+
+                if (referenceHeight > 0) {
+                    objectImage.style.maxHeight = `${referenceHeight}px`;
+                }
+            });
+        }
+
+        window.addEventListener('load', syncExampleObjectHeight);
+        window.addEventListener('resize', syncExampleObjectHeight);
+        document.querySelectorAll('.example-media img').forEach((image) => {
+            image.addEventListener('load', syncExampleObjectHeight);
         });
 
         const heroVideo = document.querySelector('.hero-video');
