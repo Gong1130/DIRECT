@@ -6,7 +6,7 @@
 </div>
 
 <div>
-    <a href="#">Jingbo Gong</a><sup>1,3</sup>&emsp;
+    <a href="https://scholar.google.com/citations?view_op=list_works&hl=en&user=ykDY1vsAAAAJ" target="_blank">Jingbo Gong</a><sup>1,3</sup>&emsp;
     <a href="https://yikai-wang.github.io/" target="_blank">Yikai Wang</a><sup>2✉</sup>&emsp;
     <a href="https://nirvanalan.github.io/" target="_blank">Yushi Lan</a><sup>2</sup>&emsp;
     <a href="https://scholar.google.com/citations?user=kKyVqq0AAAAJ" target="_blank">Yuhao Wan</a><sup>1</sup>&emsp;
@@ -40,6 +40,9 @@
         <a href="https://huggingface.co/superGong/DIRECT" target="_blank">
             <img src="https://img.shields.io/badge/🤗-Model%20Weights-yellow">
         </a>
+        <a href="https://huggingface.co/datasets/superGong/DIRECT-dataset" target="_blank">
+            <img src="https://img.shields.io/badge/🤗-Dataset-green">
+        </a>
     </h4>
 </div>
 
@@ -56,14 +59,15 @@ For more visual results, please check out our <a href="https://gong1130.github.i
 
 ## 📬 News
 
+- [2026.07] Release training dataset, training code, and preprocessing code.
 - [2026.06] Release inference code, interactive demo, and model weights.
 - [2026.05] DIRECT was accepted by ICML 2026! The repository and project page are now available.
 
 ## 📅 TODO
 
 - [x] Release inference code and interactive demo.
-- [ ] Release dataset.
-- [ ] Release training and preprocessing code.
+- [x] Release dataset.
+- [x] Release training and preprocessing code.
 
 ## 🔍 Overview
 
@@ -93,6 +97,7 @@ Install the remaining dependencies:
 
 ```bash
 pip install --no-build-isolation -r requirements.txt
+pip install -e .
 ```
 
 Some dependencies are compiled CUDA extensions. If the build cannot find CUDA, set `CUDA_HOME` to your local CUDA 11.8 toolkit path before installing the requirements.
@@ -122,6 +127,70 @@ ssh -L 7860:localhost:7860 -L 8081:localhost:8081 <user>@<server>
 ```
 
 After port forwarding, open `http://localhost:7860` in your local browser to use the full demo.
+
+## 📦 Dataset Download
+
+DIRECT training uses the released DIRECT dataset and the mask templates from MISATO for *Shape-Decomposed Mask Augmentation*, described in Section 3.4 of our [paper](https://arxiv.org/pdf/2606.06601).
+
+Download and extract the DIRECT dataset:
+
+- https://huggingface.co/datasets/superGong/DIRECT-dataset
+
+```bash
+cd <path-to-DIRECT-dataset>
+
+for t in MVImgNet/*.tar; do
+  tar -xf "$t" -C MVImgNet
+  rm "$t"
+done
+
+for t in SA1B/*.tar; do
+  tar -xf "$t" -C SA1B
+  rm "$t"
+done
+```
+
+Download MISATO and keep only the object mask templates used by DIRECT:
+
+- https://huggingface.co/datasets/yikaiwang/MISATO
+
+```bash
+cd <path-to-MISATO>
+
+unzip asuka_training_mask.zip \
+  'asuka_training_mask/object_masks/*' \
+  -x 'asuka_training_mask/object_masks/humanparsing_masks/*'
+
+find . -mindepth 1 -maxdepth 1 ! -name 'asuka_training_mask' -exec rm -rf {} +
+```
+
+After downloading the datasets, update `dataset_root` and `mask_template_path` in `dataset_config/direct_stage1_512.yaml` and `dataset_config/direct_stage2_1024.yaml` to match your local paths.
+
+## 🏋️ Training
+
+We train DIRECT with Accelerate. Training is divided into two stages.
+
+Stage 1 trains at 512 resolution:
+
+```bash
+bash training/train_direct_stage1.sh
+```
+
+Stage 2 trains at 1024 resolution and initializes from the Stage 1 checkpoint:
+
+```bash
+bash training/train_direct_stage2.sh
+```
+
+In our experiments, we train Stage 1 with 4 GPUs and Stage 2 with 8 GPUs.
+
+## 🧩 Preprocess
+
+We provide example preprocessing code for *Geometric Alignment*, described in Section 3.4 of our [paper](https://arxiv.org/pdf/2606.06601).
+
+Given an object image, *Geometric Alignment* estimates its 6D pose in the TRELLIS-generated 3D object. This pipeline can be used as a reference for preparing DIRECT training data on other datasets.
+
+Please see [preprocess](./preprocess/) for details.
 
 ## 📝 BibTeX
 

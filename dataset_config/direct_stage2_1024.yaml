@@ -1,0 +1,19 @@
+global_params:
+  mask_template_path: path/to/MISATO/asuka_training_mask/object_masks
+  rotate_ref: true
+
+
+datasets:
+  - class: MVImgNetDataset_Trellis_MultiRes
+    params:
+      dataset_root: path/to/DIRECT-dataset/MVImgNet
+      crop_strategy: crop_full_image
+      constraint_inpainting_area: true
+      asymmetrical_constraint: true
+
+  - class: SA1BDataset_Trellis_MultiRes
+    params:
+      dataset_root: path/to/DIRECT-dataset/SA1B
+      crop_strategy: mask_ratio
+      min_ratio: 0.2
+      max_ratio: 0.6

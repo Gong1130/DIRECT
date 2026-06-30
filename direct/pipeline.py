@@ -1149,6 +1149,56 @@ class DirectPipeline:
         self.pooled_image_projector = pooled_image_projector.to(device)
         self.image_projector = image_projector.to(device)
 
+    @classmethod
+    def from_training_components(
+        cls,
+        flux_model_path: Union[str, os.PathLike],
+        transformer: FluxTransformer2DModelwithcond,
+        vae: AutoencoderKL,
+        condition_embedder: torch.nn.Module,
+        image_encoder: torch.nn.Module,
+        siglip_processor,
+        pooled_image_projector: torch.nn.Module,
+        image_projector: torch.nn.Module,
+        device: Optional[Union[str, torch.device]] = "cuda",
+        torch_dtype: Optional[Union[str, torch.dtype]] = None,
+        cache_dir: Optional[Union[str, os.PathLike]] = None,
+        local_files_only: bool = False,
+        token: Optional[Union[str, bool]] = None,
+        revision: Optional[str] = None,
+        variant: Optional[str] = None,
+    ) -> "DirectPipeline":
+        torch_dtype = cls._resolve_torch_dtype(torch_dtype)
+        hub_kwargs = {
+            "cache_dir": cache_dir,
+            "local_files_only": local_files_only,
+        }
+        if token is not None:
+            hub_kwargs["token"] = token
+        if revision is not None:
+            hub_kwargs["revision"] = revision
+        if variant is not None:
+            hub_kwargs["variant"] = variant
+
+        flux_pipeline = _DirectFluxFillPipeline.from_pretrained(
+            flux_model_path,
+            vae=vae,
+            text_encoder=None,
+            text_encoder_2=None,
+            transformer=transformer,
+            torch_dtype=torch_dtype,
+            **hub_kwargs,
+        )
+        return cls(
+            flux_pipeline,
+            condition_embedder.to(dtype=torch_dtype),
+            image_encoder,
+            siglip_processor,
+            pooled_image_projector.to(dtype=torch_dtype),
+            image_projector.to(dtype=torch_dtype),
+            device,
+        )
+
     @staticmethod
     def _load_config(
         direct_model_path: Union[str, os.PathLike],

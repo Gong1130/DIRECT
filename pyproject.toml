@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "direct"
+version = "0.1.0"
+description = "DIRECT training, inference, and preprocessing code."
+requires-python = ">=3.10"
+
+[tool.setuptools.packages.find]
+where = [".", "third_party"]
+include = ["direct*", "dataset*", "trellis*", "vggt*"]
+namespaces = true
